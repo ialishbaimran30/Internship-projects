@@ -35,7 +35,7 @@
 </form>
 <hr>
 {% for task in tasks %}
-
+<div class="card">
 <h3>{{ task.title }}</h3>
 <p> {{ task.description }}</p>
 <p>Priority: {{ task.priority }}</p>
@@ -47,7 +47,7 @@
 
 </p>
 <a href="{%url 'edit_task' task.id%}">Edit</a>
-<a href="{%url 'delete_task' task.id%}">Delete</a>
+<a href="{%url 'delete_task' task.id%}">Delete</a></div>
 <hr>
 
 {% empty %}
