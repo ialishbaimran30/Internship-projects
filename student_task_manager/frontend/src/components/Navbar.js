@@ -1,20 +1,37 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
+
+    const navigate = useNavigate();
+
+    const logout = () => {
+
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
+
+        navigate("/");
+
+    };
 
     return (
 
         <nav>
 
-            <Link to="/dashboard">Dashboard</Link> |{" "}
+            <Link to="/dashboard">Dashboard</Link>
 
-            <Link to="/tasks">Tasks</Link> |{" "}
+            {" | "}
 
-            <Link to="/tasks/add">Add Task</Link> |{" "}
+            <Link to="/tasks">Tasks</Link>
 
-            <Link to="/notes">Notes</Link> |{" "}
+            {" | "}
 
-            <Link to="/notes/add">Add Note</Link>
+            <Link to="/tasks/add">Add Task</Link>
+
+            {" | "}
+
+            <button onClick={logout}>
+                Logout
+            </button>
 
         </nav>
 

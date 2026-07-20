@@ -1,12 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import TaskList from "./pages/TaskList";
 import TaskForm from "./pages/TaskForm";
-import NoteList from "./pages/NoteList";
-import NoteForm from "./pages/NoteForm";
-
+import CategoryPage from "./pages/CategoryPage";
+import TagPage from "./pages/TagPage";
+import Register from "./pages/Register";
 function App() {
   return (
     <BrowserRouter>
@@ -20,10 +19,12 @@ function App() {
         <Route path="/tasks" element={<TaskList />} />
 
         <Route path="/tasks/add" element={<TaskForm />} />
+        <Route path="/tasks/edit/:id" element={<TaskForm />} />
+        <Route path="/categories" element={<CategoryPage />} />
+        <Route path="/tags" element={<TagPage />} />
+        <Route path="/register" element={<Register />} />
 
-        <Route path="/notes" element={<NoteList />} />
-
-        <Route path="/notes/add" element={<NoteForm />} />
+    
 
       </Routes>
 

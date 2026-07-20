@@ -1,0 +1,30 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(34, 31, 43, 0.35);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal {
+  width: 100%;
+  max-width: 360px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal h2 {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.modal-btn {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
