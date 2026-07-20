@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import { showToast } from "../utils/toast";
 import "../styles/login.css";
 
 function Login() {
@@ -17,7 +18,7 @@ function Login() {
       navigate("/dashboard");
     }).catch((error) => {
       console.log(error.response);
-      alert("Login Failed");
+      showToast("Login failed", "error");
     });
   };
 

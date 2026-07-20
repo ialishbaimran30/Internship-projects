@@ -54,11 +54,8 @@
   color: var(--panel-dark);
 }
 
-.sidebar-theme {
-  margin-top: auto;
-}
-
 .sidebar-logout {
+  margin-top: auto;
   color: rgba(232, 138, 125, 0.85);
 }
 .sidebar-logout:hover {

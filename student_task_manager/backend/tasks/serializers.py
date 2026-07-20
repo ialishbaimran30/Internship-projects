@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Task,Category,Tag
+from .models import Task,Category,Tag,Notification
 from django.contrib.auth.models import User
 
 class Taskserializer(serializers.ModelSerializer):
@@ -32,6 +32,12 @@ class TagSerializer(serializers.ModelSerializer):
         model = Tag
         fields = "__all__"
         read_only_fields=["user"]
+
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = "__all__"
+        read_only_fields = ["user"]
 
 # class RegisterSerializer(serializers.ModelSerializer):
 #     class Meta:

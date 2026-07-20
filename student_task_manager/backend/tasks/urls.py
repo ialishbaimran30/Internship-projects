@@ -1,13 +1,13 @@
 from django.urls import path,include
 from . import views
 from rest_framework.routers import DefaultRouter
-from .views import TaskViewSet,CategoryViewSet,TagViewSet
+from .views import TaskViewSet,CategoryViewSet,TagViewSet,NotificationViewSet
 
 router = DefaultRouter()
 router.register("api", TaskViewSet, basename="tasks")
 router.register("categories",CategoryViewSet)
 router.register("tags",TagViewSet)
-
+router.register("notifications",NotificationViewSet, basename="notifications")
 urlpatterns=[
     path("add/",views.add_task,name = "add_task"),
     path("",views.task_list,name="task_list"),

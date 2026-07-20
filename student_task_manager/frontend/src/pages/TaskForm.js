@@ -4,6 +4,7 @@ import api from "../services/api";
 import CategoryModal from "../components/CategoryModal";
 import TagModal from "../components/TagModal";
 import Sidebar from "../components/Sidebar";
+import { showToast } from "../utils/toast";
 import "../styles/taskform.css";
 
 const DRAFT_KEY = "taskFormDraft";
@@ -25,6 +26,7 @@ function TaskForm() {
   const [title, setTitle] = useState(draft?.title || "");
   const [description, setDescription] = useState(draft?.description || "");
   const [dueDate, setDueDate] = useState(draft?.dueDate || "");
+  const [dueTime, setDueTime] = useState(draft?.dueTime || "");
   const [priority, setPriority] = useState(draft?.priority || "Medium");
   const [status, setStatus] = useState(draft?.status || "Pending");
   const [category, setCategory] = useState(draft?.category || "");
@@ -40,9 +42,9 @@ function TaskForm() {
     if (id) return; // don't draft while editing an existing task
     sessionStorage.setItem(
       DRAFT_KEY,
-      JSON.stringify({ title, description, dueDate, priority, status, category, tag })
+      JSON.stringify({ title, description, dueDate, dueTime, priority, status, category, tag })
     );
-  }, [id, title, description, dueDate, priority, status, category, tag]);
+  }, [id, title, description, dueDate, dueTime, priority, status, category, tag]);
 
   useEffect(() => {
     loadCategories();
@@ -53,6 +55,7 @@ function TaskForm() {
         setTitle(task.title);
         setDescription(task.description);
         setDueDate(task.due_date);
+        setDueTime(task.due_time || "");
         setPriority(task.priority);
         setStatus(task.status);
         setCategory(task.category);
@@ -63,19 +66,48 @@ function TaskForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const taskData = { title, description, due_date: dueDate, priority, status, category, tags: [tag] };
+
+    if (!title.trim()) {
+      showToast("Please enter a title.", "error");
+      return;
+    }
+    if (!dueDate) {
+      showToast("Please pick a due date.", "error");
+      return;
+    }
+    if (!category) {
+      showToast("Please select a category before saving — it's required.", "error");
+      return;
+    }
+
+    const taskData = {
+      title,
+      description,
+      due_date: dueDate,
+      due_time: dueTime || null,
+      priority,
+      status,
+      category,
+      tags: tag ? [tag] : [],
+    };
 
     if (id) {
       api.put(`/tasks/api/${id}/`, taskData).then(() => {
-        alert("Task Updated");
+        showToast("Task updated");
         navigate("/tasks");
-      }).catch(console.log);
+      }).catch((err) => {
+        console.log(err.response?.data);
+        showToast("Couldn't update task", "error");
+      });
     } else {
       api.post("/tasks/api/", taskData).then(() => {
         sessionStorage.removeItem(DRAFT_KEY);
-        alert("Task Added");
+        showToast("Task saved");
         navigate("/tasks");
-      }).catch(console.log);
+      }).catch((err) => {
+        console.log(err.response?.data);
+        showToast("Couldn't save task", "error");
+      });
     }
   };
 
@@ -124,6 +156,11 @@ function TaskForm() {
             <label className="field">
               <span>Due date</span>
               <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
+            </label>
+
+            <label className="field">
+              <span>Deadline time (optional)</span>
+              <input type="time" value={dueTime} onChange={(e) => setDueTime(e.target.value)} />
             </label>
 
             <label className="field">

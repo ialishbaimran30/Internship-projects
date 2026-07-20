@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { getTheme, toggleTheme } from "../utils/theme";
 import "../styles/Sidebar.css";
 
 const NAV_ITEMS = [
@@ -49,12 +47,6 @@ const NAV_ITEMS = [
 function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [dark, setDark] = useState(getTheme() === "dark");
-
-  const handleThemeToggle = () => {
-    const next = toggleTheme();
-    setDark(next === "dark");
-  };
 
   const logout = () => {
     localStorage.removeItem("access");
@@ -88,19 +80,6 @@ function Sidebar() {
           );
         })}
       </nav>
-
-      <button className="sidebar-item sidebar-theme" onClick={handleThemeToggle} title={dark ? "Switch to light mode" : "Switch to dark mode"}>
-        {dark ? (
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="4.5" stroke="currentColor" strokeWidth="1.8" />
-            <path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-          </svg>
-        ) : (
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
-            <path d="M20 14.5A8.5 8.5 0 1110 3.5a7 7 0 0010 11z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
-          </svg>
-        )}
-      </button>
 
       <button className="sidebar-item sidebar-logout" onClick={logout} title="Logout">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">

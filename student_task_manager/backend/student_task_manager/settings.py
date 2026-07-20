@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,10 +40,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'accounts',
+    'channels',
     'tasks',
     "rest_framework",
     "corsheaders",
 ]
+
+ASGI_APPLICATION = "student_task_manager.asgi.application"   
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES":["rest_framework_simplejwt.authentication.JWTAuthentication", "rest_framework.authentication.SessionAuthentication","rest_framework.authentication.BasicAuthentication",],
 }

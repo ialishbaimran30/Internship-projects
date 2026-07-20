@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import { showToast } from "../utils/toast";
 import "../styles/login.css";
 
 function Register() {
@@ -11,11 +12,11 @@ function Register() {
   const registerUser = (e) => {
     e.preventDefault();
     api.post("/register/", { username, password }).then(() => {
-      alert("Registration Successful");
-      navigate("/");
+      showToast("Registration successful");
+      setTimeout(() => navigate("/"), 800);
     }).catch((err) => {
       console.log(err.response);
-      alert("Registration Failed");
+      showToast("Registration failed", "error");
     });
   };
 

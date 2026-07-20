@@ -34,6 +34,8 @@ class Task(models.Model):
       priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES,default="Medium")
       time_spent_minutes = models.PositiveIntegerField(default=0)
       timer_started_at = models.DateTimeField(null=True, blank=True)
+      due_time = models.TimeField(null=True, blank=True)          # e.g. 5:00 PM
+      deadline_notified = models.BooleanField(default=False) 
 
       status = models.CharField(
     max_length=20,
@@ -52,3 +54,13 @@ class Task(models.Model):
 
       def __str__(self):
           return self.title
+      
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True, blank=True)
+    message = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.message

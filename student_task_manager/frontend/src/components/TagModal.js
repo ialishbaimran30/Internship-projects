@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../services/api";
+import { showToast } from "../utils/toast";
 import "../styles/modal.css";
 
 function TagModal({ show, onClose, refreshTags }) {
@@ -10,11 +11,12 @@ function TagModal({ show, onClose, refreshTags }) {
     api.post("/tasks/tags/", { name: name }).then(() => {
       setName("");
       if (refreshTags) refreshTags();
+      showToast("Tag created");
       onClose();
     }).catch((err) => {
       console.log(err.response.data);
       console.log(err.response.status);
-      alert("Error Creating Tag");
+      showToast("Couldn't create tag", "error");
     });
   };
 

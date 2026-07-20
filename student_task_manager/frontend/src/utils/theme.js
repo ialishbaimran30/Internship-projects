@@ -18,7 +18,4 @@ export function toggleTheme() {
   setTheme(next);
   return next;
 }
-
-// Apply saved theme immediately when this module is first imported,
-// so the correct theme is set before the page paints.
 applyTheme(getTheme());

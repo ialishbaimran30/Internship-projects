@@ -139,50 +139,6 @@ textarea { resize: vertical; min-height: 90px; }
   min-height: 100vh;
 }
 
-[data-theme="dark"] {
-  --bg-1: #1b1824;
-  --bg-2: #201c2c;
-  --bg-3: #241f30;
-
-  --ink: #f1eef7;
-  --ink-soft: #b7b1c8;
-  --ink-faint: #85809a;
-
-  --glass: rgba(46, 41, 61, 0.55);
-  --glass-strong: rgba(46, 41, 61, 0.78);
-  --glass-border: rgba(255, 255, 255, 0.08);
-
-  --panel-dark: #100e17;
-  --panel-dark-soft: #1c1927;
-  --surface-soft: rgba(255, 255, 255, 0.06);
-  --surface-tint: rgba(255, 255, 255, 0.1);
-}
-
-[data-theme="dark"] input[type="text"],
-[data-theme="dark"] input[type="password"],
-[data-theme="dark"] input[type="date"],
-[data-theme="dark"] textarea,
-[data-theme="dark"] select {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.14);
-  color: var(--ink);
-}
-[data-theme="dark"] input:focus,
-[data-theme="dark"] textarea:focus,
-[data-theme="dark"] select:focus {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-[data-theme="dark"] .btn-ghost {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.14);
-  color: var(--ink);
-}
-[data-theme="dark"] .btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.12);
-}
-
 .app-main {
   flex: 1;
   padding: 32px 40px 40px 24px;

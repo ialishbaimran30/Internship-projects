@@ -4,6 +4,7 @@ import api from "../services/api";
 import Sidebar from "../components/Sidebar";
 import ProgressBar from "../components/ProgressBar";
 import TimeTracker from "../components/TimeTracker";
+import NotificationBell from "../components/NotificationBell";
 import { isToday, isUpcoming, formatFriendlyDate, statusProgress } from "../utils/schedule";
 import { useTaskReminders } from "../utils/useTaskReminders";
 import "../styles/dashboard.css";
@@ -66,7 +67,7 @@ function Dashboard() {
       <main className="app-main dash-main">
         <div className="dash-topbar">
           <h1>Dashboard</h1>
-          <button className="btn btn-primary" onClick={() => navigate("/tasks/add")}>+ Add Task</button>
+          <NotificationBell />
         </div>
         <p className="dash-welcome">Welcome back, {username}</p>
 

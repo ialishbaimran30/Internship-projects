@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../services/api";
+import { showToast } from "../utils/toast";
 import "../styles/modal.css";
 
 function CategoryModal({ show, onClose, refreshCategories }) {
@@ -10,10 +11,12 @@ function CategoryModal({ show, onClose, refreshCategories }) {
     api.post("/tasks/categories/", { name: name }).then(() => {
       setName("");
       if (refreshCategories) refreshCategories();
+      showToast("Category created");
       onClose();
     }).catch((err) => {
       console.log(err.response.data);
       console.log(err.response.status);
+      showToast("Couldn't create category", "error");
     });
   };
 
