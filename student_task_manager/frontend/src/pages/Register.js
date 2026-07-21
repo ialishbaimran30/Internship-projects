@@ -6,19 +6,28 @@ import "../styles/login.css";
 
 function Register() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({username: "",email: "",password: "",password2: "",});
 
-  const registerUser = (e) => {
-    e.preventDefault();
-    api.post("/register/", { username, password }).then(() => {
-      showToast("Registration successful");
-      setTimeout(() => navigate("/"), 800);
-    }).catch((err) => {
-      console.log(err.response);
-      showToast("Registration failed", "error");
-    });
-  };
+  const handleChange = (e) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value,
+  });
+};
+
+  const registerUser = async (e) => {
+  e.preventDefault();
+
+  try {
+    await api.post("/register/", formData);
+
+    showToast("Registration successful");
+    setTimeout(() => navigate("/"), 800);
+  } catch (err) {
+    console.log(err.response?.data);
+    showToast("Registration failed", "error");
+  }
+};
 
   return (
     <div className="auth-screen">
@@ -37,12 +46,20 @@ function Register() {
         <form onSubmit={registerUser} className="auth-form">
           <label className="field">
             <span>Username</span>
-            <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+            <input type="text" name="username" placeholder="Username"value={formData.username}onChange={handleChange}required/>
           </label>
 
           <label className="field">
+            <span>Email</span>
+            <input type="email"name="email"placeholder="Email"value={formData.email}onChange={handleChange}required/>
+          </label>
+          <label className="field">
             <span>Password</span>
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange}required />
+          </label>
+          <label className="field">
+            <span>Confirm Password</span>
+            <input type="password"name="password2"placeholder="Confirm Password"value={formData.password2}onChange={handleChange}required/>
           </label>
 
           <button className="btn btn-primary auth-submit" type="submit">Register</button>

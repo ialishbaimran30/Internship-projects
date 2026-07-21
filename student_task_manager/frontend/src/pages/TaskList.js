@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import Sidebar from "../components/Sidebar";
 import TimeTracker from "../components/TimeTracker";
+import { showToast } from "../utils/toast";
 import "../styles/tasklist.css";
 
 const PRIORITY_COLOR = {
@@ -78,6 +79,9 @@ function TaskList() {
     if (!window.confirm("Delete this task?")) return;
     api.delete(`/tasks/api/${id}/`).then(() => {
       setTasks(tasks.filter((task) => task.id !== id));
+      showToast("Task deleted");
+    }).catch(() => {
+      showToast("Couldn't delete task", "error");
     });
   };
 

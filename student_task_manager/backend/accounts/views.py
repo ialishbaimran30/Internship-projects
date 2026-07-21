@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from tasks.models import Task
 from rest_framework import generics
-from accounts.serializers import RegisterSerializer
+from .serializers import RegisterSerializer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import AllowAny
 

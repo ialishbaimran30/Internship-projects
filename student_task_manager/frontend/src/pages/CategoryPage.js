@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import Sidebar from "../components/Sidebar";
-import CategoryModal from "../components/CategoryModal";
+import { showToast } from "../utils/toast";
 import "../styles/category.css";
 
 function CategoryPage() {
-  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
-  const [showCategory, setShowCategory] = useState(false);
 
   const loadCategories = () => {
     api.get("/tasks/categories/").then((res) => setCategories(res.data));
@@ -20,7 +17,12 @@ function CategoryPage() {
 
   const deleteCategory = (id) => {
     if (window.confirm("Delete Category?")) {
-      api.delete(`/tasks/categories/${id}/`).then(() => loadCategories());
+      api.delete(`/tasks/categories/${id}/`).then(() => {
+        loadCategories();
+        showToast("Category deleted");
+      }).catch(() => {
+        showToast("Couldn't delete category", "error");
+      });
     }
   };
 
@@ -28,11 +30,6 @@ function CategoryPage() {
     <div className="app-shell">
       <Sidebar />
       <main className="app-main">
-        <div className="manage-header">
-          <button className="btn btn-ghost" onClick={() => navigate(-1)}>&larr; Back</button>
-          <button className="btn btn-primary" onClick={() => setShowCategory(true)}>+ Add Category</button>
-        </div>
-
         <h1 className="manage-title">Manage Categories</h1>
         <p className="manage-sub">Organize tasks under categories</p>
 
@@ -48,8 +45,6 @@ function CategoryPage() {
             ))
           )}
         </div>
-
-        <CategoryModal show={showCategory} onClose={() => setShowCategory(false)} refreshCategories={loadCategories} />
       </main>
     </div>
   );

@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import Sidebar from "../components/Sidebar";
-import TagModal from "../components/TagModal";
+import { showToast } from "../utils/toast";
 import "../styles/category.css";
 
 function TagPage() {
-  const navigate = useNavigate();
   const [tags, setTags] = useState([]);
-  const [showTag, setShowTag] = useState(false);
 
   const loadTags = () => {
     api.get("/tasks/tags/").then((res) => setTags(res.data));
@@ -20,7 +17,12 @@ function TagPage() {
 
   const deleteTag = (id) => {
     if (window.confirm("Delete Tag?")) {
-      api.delete(`/tasks/tags/${id}/`).then(() => loadTags());
+      api.delete(`/tasks/tags/${id}/`).then(() => {
+        loadTags();
+        showToast("Tag deleted");
+      }).catch(() => {
+        showToast("Couldn't delete tag", "error");
+      });
     }
   };
 
@@ -28,11 +30,6 @@ function TagPage() {
     <div className="app-shell">
       <Sidebar />
       <main className="app-main">
-        <div className="manage-header">
-          <button className="btn btn-ghost" onClick={() => navigate(-1)}>&larr; Back</button>
-          <button className="btn btn-primary" onClick={() => setShowTag(true)}>+ Add Tag</button>
-        </div>
-
         <h1 className="manage-title">Manage Tags</h1>
         <p className="manage-sub">Keep your tags tidy and relevant</p>
 
@@ -48,8 +45,6 @@ function TagPage() {
             ))
           )}
         </div>
-
-        <TagModal show={showTag} onClose={() => setShowTag(false)} refreshTags={loadTags} />
       </main>
     </div>
   );

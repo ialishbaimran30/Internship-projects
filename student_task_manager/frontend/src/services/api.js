@@ -6,7 +6,7 @@ const api = axios.create({
   baseURL: BASE_URL,
 });
 
-// Attach the current access token to every request
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("access");
   if (token) {
@@ -25,8 +25,7 @@ function resolvePendingRequests(newToken) {
   pendingRequests = [];
 }
 
-// If a request comes back 401 (access token expired), silently use the
-// refresh token to get a new access token, then retry the original request.
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {

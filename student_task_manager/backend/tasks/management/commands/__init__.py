@@ -3,7 +3,6 @@ from django.utils import timezone
 from tasks.models import Task
 from tasks.utils import push_notification
 
-
 class Command(BaseCommand):
     help = "Notifies users when a task's deadline has passed"
 

@@ -36,10 +36,9 @@ function TaskForm() {
   const [showCategory, setShowCategory] = useState(false);
   const [showTag, setShowTag] = useState(false);
 
-  // Keep the in-progress "Add Task" form saved so it survives navigating
-  // to Manage Categories / Manage Tags and coming back.
+
   useEffect(() => {
-    if (id) return; // don't draft while editing an existing task
+    if (id) return; 
     sessionStorage.setItem(
       DRAFT_KEY,
       JSON.stringify({ title, description, dueDate, dueTime, priority, status, category, tag })
