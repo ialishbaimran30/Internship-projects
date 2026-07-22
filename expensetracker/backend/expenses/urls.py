@@ -1,0 +1,12 @@
+from django.urls import path
+from .views import (CategoryListCreateView,CategoryDetailView,ExpenseListCreateView,ExpenseDetailView,ExpenseDashboardView,)
+
+urlpatterns = [
+    path("categories/", CategoryListCreateView.as_view(), name="category-list"),
+    path("categories/<int:pk>/", CategoryDetailView.as_view(), name="category-detail"),
+
+    path("expenses/", ExpenseListCreateView.as_view(), name="expense-list"),
+    path("expenses/<int:pk>/", ExpenseDetailView.as_view(), name="expense-detail"),
+
+    path("expenses/dashboard/", ExpenseDashboardView.as_view(), name="expense-dashboard"),
+]
